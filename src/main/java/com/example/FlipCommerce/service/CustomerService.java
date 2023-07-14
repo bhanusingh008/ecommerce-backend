@@ -41,6 +41,5 @@ public class CustomerService {
         customerRepository.delete(cus);
 
         return CustomerTransformer.CustomerToCustomerResponseDto(cus);
-
     }
 }

@@ -99,7 +99,7 @@ public class OrderService {
         for(Item item: cart.getItems()){
             Product product = item.getProduct();
             if(item.getRequiredQuantity()>product.getQuantity()){
-                throw new InsufficientQuantityException("Required Quantity not present!!");
+                throw new InsufficientQuantityException("Required Quantity of "+product.getName()+" is not available");
             }
 
             totalValue += item.getRequiredQuantity()*product.getPrice();
