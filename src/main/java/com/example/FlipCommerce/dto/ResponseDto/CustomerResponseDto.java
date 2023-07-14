@@ -12,6 +12,8 @@ public class CustomerResponseDto {
 
     String name;
 
+    int age;
+
     String emailId;
 
     String mobNo;

@@ -23,6 +23,8 @@ public class Customer {
 
     String name;
 
+    int age;
+
     @Column(unique = true,nullable = false)
     String emailId;
 

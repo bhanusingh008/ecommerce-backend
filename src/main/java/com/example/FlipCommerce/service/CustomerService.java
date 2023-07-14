@@ -1,5 +1,6 @@
 package com.example.FlipCommerce.service;
 
+import com.example.FlipCommerce.Enum.Gender;
 import com.example.FlipCommerce.dto.RequestDto.CustomerRequestDto;
 import com.example.FlipCommerce.dto.ResponseDto.CustomerResponseDto;
 import com.example.FlipCommerce.model.Cart;
@@ -7,7 +8,11 @@ import com.example.FlipCommerce.model.Customer;
 import com.example.FlipCommerce.repository.CustomerRepository;
 import com.example.FlipCommerce.transformer.CustomerTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CustomerService {
@@ -41,5 +46,31 @@ public class CustomerService {
         customerRepository.delete(cus);
 
         return CustomerTransformer.CustomerToCustomerResponseDto(cus);
+    }
+
+    public int getFemaleCustomerInRange(int from, int to) {
+        int total = 0;
+        List<Customer> list = customerRepository.findAll();
+
+        for(Customer cus : list){
+            if(cus.getGender() == Gender.FEMALE){
+                total++;
+            }
+        }
+        return total;
+    }
+
+    public List<CustomerResponseDto> getAllUserUnderSomeAge(int limit) {
+        List<Customer> list = customerRepository.findAll();
+
+        List<CustomerResponseDto> req = new ArrayList<>();
+
+        for(Customer cus : list){
+            if(cus.getAge() <= limit){
+                CustomerResponseDto responseDto =  CustomerTransformer.CustomerToCustomerResponseDto(cus);
+                req.add(responseDto);
+            }
+        }
+        return req;
     }
 }
