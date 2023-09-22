@@ -40,7 +40,19 @@ public class ProductController {
         return new ResponseEntity(productResponseDtos,HttpStatus.FOUND);
     }
 
-    // get all the products of a category
+    @GetMapping("/get/category/{category}")
+    public ResponseEntity getAllProductsOfCategory(@PathVariable("category") Category category){
+
+        List<ProductResponseDto> productResponseDtos = productService.getAllProductsByCategory(category);
+        return new ResponseEntity(productResponseDtos, HttpStatus.FOUND);
+    }
+
+    @GetMapping("/get/{product}")
+    public ResponseEntity getProducts(@PathVariable("product") String productQuery){
+
+        List<ProductResponseDto> productResponseDtos = productService.getProducts(productQuery);
+        return new ResponseEntity(productResponseDtos, HttpStatus.FOUND);
+    }
 
     // get all the products in a category who have price greater than 500
 

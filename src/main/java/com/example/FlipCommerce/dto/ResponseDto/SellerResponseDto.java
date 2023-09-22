@@ -14,4 +14,6 @@ public class SellerResponseDto {
     String name;
 
     String mobNo;
+
+    String email;
 }

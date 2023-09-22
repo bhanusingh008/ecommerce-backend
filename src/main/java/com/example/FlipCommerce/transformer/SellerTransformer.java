@@ -20,6 +20,7 @@ public class SellerTransformer {
         return SellerResponseDto.builder()
                 .name(seller.getName())
                 .mobNo(seller.getMobNo())
+                .email(seller.getEmailId())
                 .build();
     }
 }

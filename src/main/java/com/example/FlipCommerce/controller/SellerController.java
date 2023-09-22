@@ -6,10 +6,9 @@ import com.example.FlipCommerce.service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/seller")
@@ -25,6 +24,21 @@ public class SellerController {
         return new ResponseEntity(sellerResponseDto, HttpStatus.CREATED);
     }
 
+    @GetMapping("/getAll")
+    public ResponseEntity getAllSellers(){
+
+        List<SellerResponseDto> list = sellerService.getAllSellers();
+
+        return new ResponseEntity(list, HttpStatus.FOUND);
+    }
+
+    @GetMapping("/getWithMostProducts")
+    public ResponseEntity getWithMostProducts(){
+
+        SellerResponseDto sellerResponseDto = sellerService.getWithMostProducts();
+
+        return new ResponseEntity<>(sellerResponseDto, HttpStatus.FOUND);
+    }
     // update the seller info based on email.
 
     // get all the sellers who sell products of a particular category

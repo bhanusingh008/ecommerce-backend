@@ -8,6 +8,9 @@ import com.example.FlipCommerce.transformer.SellerTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class SellerService {
 
@@ -21,5 +24,22 @@ public class SellerService {
         Seller savedSeller = sellerRepository.save(seller);
         // prepare response Dto
         return SellerTransformer.SellerToSellerResponseDto(savedSeller);
+    }
+
+    public List<SellerResponseDto> getAllSellers() {
+
+        List<Seller> sellerList = sellerRepository.findAll();
+
+        List<SellerResponseDto> responseDto = new ArrayList<>();
+
+        for(Seller seller : sellerList){
+            responseDto.add(SellerTransformer.SellerToSellerResponseDto(seller));
+        }
+
+        return responseDto;
+    }
+
+    public SellerResponseDto getWithMostProducts() {
+        return SellerTransformer.SellerToSellerResponseDto(sellerRepository.oneWithMostProducts());
     }
 }

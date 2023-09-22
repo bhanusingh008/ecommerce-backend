@@ -8,10 +8,11 @@ import com.example.FlipCommerce.model.Product;
 import com.example.FlipCommerce.model.Seller;
 import com.example.FlipCommerce.repository.ProductRepository;
 import com.example.FlipCommerce.repository.SellerRepository;
+import com.example.FlipCommerce.repository.Specifications.ProductSpecs;
 import com.example.FlipCommerce.transformer.ProductTransformer;
-import jakarta.persistence.Entity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.example.FlipCommerce.repository.Specifications.ProductSpecs.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ public class ProductService {
 
         Seller seller = sellerRepository.findByEmailId(productRequestDto.getSellerEmailId());
         if(seller==null){
-            throw new SellerNotFoundException("EmailId is not registered");
+            throw new SellerNotFoundException("Email Id is not registered");
         }
         // dto to entity
         Product product = ProductTransformer.ProductRequestDtoToProduct(productRequestDto);
@@ -54,5 +55,30 @@ public class ProductService {
             productResponseDtos.add(ProductTransformer.ProducToProductResponseDto(product));
         }
         return productResponseDtos;
+    }
+
+    public List<ProductResponseDto> getAllProductsByCategory(Category category) {
+        List<Product> products = productRepository.findByCategory(category);
+
+        List<ProductResponseDto> productResponseDtoList = new ArrayList<>();
+
+        for(Product product : products){
+            productResponseDtoList.add(ProductTransformer.ProducToProductResponseDto(product));
+        }
+
+        return productResponseDtoList;
+    }
+
+    public List<ProductResponseDto> getProducts(String productQuery) {
+
+        List<Product> products = productRepository.findAll(new ProductSpecs().getProductsByName(productQuery));
+
+        List<ProductResponseDto> productResponseDtoList = new ArrayList<>();
+
+        for(Product product : products){
+            productResponseDtoList.add(ProductTransformer.ProducToProductResponseDto(product));
+        }
+
+        return productResponseDtoList;
     }
 }
