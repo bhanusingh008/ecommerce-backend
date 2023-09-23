@@ -81,4 +81,17 @@ public class ProductService {
 
         return productResponseDtoList;
     }
+
+    public List<ProductResponseDto> getCategoryAndPriceGreater(Category category, int price) {
+
+        List<Product> products = productRepository.findAll(new ProductSpecs().getCategoryAndPriceGreater(category, price));
+
+        List<ProductResponseDto> productResponseDtoList = new ArrayList<>();
+
+        for(Product product : products){
+            productResponseDtoList.add(ProductTransformer.ProducToProductResponseDto(product));
+        }
+
+        return productResponseDtoList;
+    }
 }

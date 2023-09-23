@@ -54,7 +54,14 @@ public class ProductController {
         return new ResponseEntity(productResponseDtos, HttpStatus.FOUND);
     }
 
-    // get all the products in a category who have price greater than 500
+    @GetMapping("/get/{category}/{price}>")
+    public ResponseEntity getCategoryAndPriceGreater(@PathVariable("category") Category category,
+                                                     @PathVariable("price") int price){
+
+        List<ProductResponseDto> productResponseDto = productService.getCategoryAndPriceGreater(category, price);
+
+        return new ResponseEntity(productResponseDto, HttpStatus.FOUND);
+    }
 
     // get the top 5 cheapest products in a category
 
